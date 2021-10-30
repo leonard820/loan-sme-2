@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "FirstLoanSME",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

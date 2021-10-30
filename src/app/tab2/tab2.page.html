@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title>
+      <h2>Loan</h2>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label position="stacked" >Loan Amount:</ion-label>
+    <ion-input type="number" [(ngModel)]='amount'></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Term</ion-label>
+    <ion-select placeholder="Select Terms" [(ngModel)]="terms">
+      <ion-select-option value=12>1 Year</ion-select-option>
+      <ion-select-option value=24>2 Years</ion-select-option>
+      <ion-select-option value=36>3 Years</ion-select-option>
+      <ion-select-option value=45>4 Years</ion-select-option>
+      <ion-select-option value=54>5 Years</ion-select-option>
+      <ion-select-option value=63>6 Years</ion-select-option>
+      <ion-select-option value=72>7 Years</ion-select-option>
+      <ion-select-option value=81>8 Years</ion-select-option>
+      <ion-select-option value=90>9 Years</ion-select-option>
+      <ion-select-option value=120>10 Years</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Interest Rate:</ion-label>
+    <ion-input disabled="true" type="text" [(ngModel)]='interest'></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Total Interest:</ion-label>
+    <ion-input disabled="true" type="text" [(ngModel)]='totalInterest'></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Total payment:</ion-label>
+    <ion-input disabled="true" type="text" [(ngModel)]='payment'></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-button type="button" (click)="totalPayment()" >Submit</ion-button>
+  </ion-item>
+
+
+
+
+  <br>
+  <ion-label position="stacked">Noted: You can pay off your load at any time
+    with no penalty.
+  </ion-label>
+  <br>
+  <ion-label position="stacked">You will only pay interest up to the date you
+    borrow it.
+  </ion-label>
+  <br>
+</ion-content>

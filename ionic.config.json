@@ -1,0 +1,8 @@
+{
+  "name": "FirstLoanSME",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "d3f67a95"
+}
