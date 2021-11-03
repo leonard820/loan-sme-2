@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import { FireserviceService } from '../fireservice.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { FirestoreService } from '../firestore.service';
 
 @Component({
   selector: 'app-login',
@@ -9,36 +13,58 @@ import { FireserviceService } from '../fireservice.service';
 })
 export class LoginPage implements OnInit {
 
-  public email:any;
-  public password:any;
+  email = '';
+  password = '';
+  loginForm: FormGroup;
+  isSubmitted = false;
 
   constructor( 
     public router:Router,
-    public fireService:FireserviceService
+    public afAuth: AngularFireAuth,
+    public alert: AlertController,
+    private afs: AngularFirestore,
+    public formBuilder: FormBuilder
     ) { }
 
   ngOnInit() {
-  }
-
-  login(){
-    this.fireService.loginWithEmail({email:this.email,password:this.password}).then(res=>{
-      console.log(res);
-      if (res.user.uid) {
-        this.fireService.getDetails({uid:res.user.uid}).subscribe(res=>{
-          console.log(res);
-          this.router.navigateByUrl('/tabs');
-          alert('Welcome ' + res['name']);
-        }),err =>(
-          console.log(err)
-        )
-      }
-    },err=>{
-      alert(err.message)
-      console.log(err);
+    this.loginForm = this.formBuilder.group({
+      email: ['',[Validators.required,Validators.email]],
+      password: ['',[Validators.required]]
     })
   }
 
-  register(){
-    this.router.navigateByUrl('register');
+  submit() {
+    this.isSubmitted = true;
+    if (this.loginForm.valid) {
+      this.login();
+    } else {
+      this.showAlert('Error!', 'Please fill in all the required fields!');
+    }
+  }
+
+  async login() {
+    const {email, password} = this;
+    try {
+      console.log(email,password);
+        const res = await this.afAuth.signInWithEmailAndPassword(email, password);
+        this.router.navigate(['/tabs']);
+        this.showAlert('Hi!', 'Welcome back to Loan');
+        console.log(res);
+    } catch (err) {
+        console.dir(err);
+        if (err.code === 'auth/user-not-found') {
+          this.showAlert('Error', err.message);
+        }
+    }
+  }
+
+  async showAlert (header: string, message: string) {
+    const alert = await this.alert.create({
+      header,
+      message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }

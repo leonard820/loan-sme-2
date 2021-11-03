@@ -9,19 +9,23 @@ const routes: Routes = [
     children: [
       {
         path: 'home',
-        loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+        loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
       },
       {
         path: 'calculator',
-        loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+        loadChildren: () => import('../calculator/calculator.module').then(m => m.CalculatorPageModule)
       },
       {
         path: 'document',
         loadChildren: () => import('../documentation/documentation.module').then(m => m.DocumentationPageModule)
       },
       {
-        path: 'contactus',
-        loadChildren: () => import('../contactus/contactus.module').then(m => m.ContactusPageModule)
+        path: 'profile',
+        loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
+      },
+      {
+        path: 'apply',
+        loadChildren: () => import('../apply/apply.module').then(m => m.ApplyPageModule)
       },
       {
         path: '',

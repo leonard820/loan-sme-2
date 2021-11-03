@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat/firestore";
+import { User } from "./models/user.interface";
 
 @Injectable({
   providedIn: "root",
 })
-export class FireserviceService {
+export class FirestoreService {
   constructor(
     public firestore: AngularFirestore,
     public auth: AngularFireAuth
@@ -23,5 +24,13 @@ export class FireserviceService {
   }
   getDetails(data) {
     return this.firestore.collection("users").doc(data.uid).valueChanges();
+  }
+
+  getUserInfo(userId: string): AngularFirestoreDocument<User> {
+    return this.firestore.collection('users').doc(userId);
+  }
+
+  userDetails() {
+    return this.auth.user
   }
 }

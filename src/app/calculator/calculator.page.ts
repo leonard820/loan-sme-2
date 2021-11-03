@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  selector: 'app-calculator',
+  templateUrl: './calculator.page.html',
+  styleUrls: ['./calculator.page.scss'],
 })
-export class Tab2Page {
+export class CalculatorPage implements OnInit {
 
   public amount:any;
   public terms:any;
@@ -14,7 +14,7 @@ export class Tab2Page {
   public payment:any;
   public activeLoanAcc:any;
 
-  constructor() {
+  constructor() { 
     this.amount = 10000
     this.interest = 0.0035;
     this.totalInterest = 0;
@@ -23,9 +23,11 @@ export class Tab2Page {
     this.activeLoanAcc = 250;
   }
 
+  ngOnInit() {
+  }
+
   totalPayment(){
     this.totalInterest = this.amount * this.terms * this.interest
     this.payment = this.amount + this.totalInterest
   }
-
 }

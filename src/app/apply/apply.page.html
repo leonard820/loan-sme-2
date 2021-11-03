@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title>
+      <h2>Loan Application</h2>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="form">
+    <form [formGroup]="applyForm" (ngSubmit)="submit()" novalidate>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input type="email" [(ngModel)]="email" value="{{ (userInfo | async)?.email }}" formControlName="email" disabled="true"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input type="text" [(ngModel)]="name" value="{{ (userInfo | async)?.name }}" formControlName="name"
+          disabled="true"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Phone</ion-label>
+        <ion-input type="phone" [(ngModel)]="phone" formControlName="phone"></ion-input>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.phone.errors?.required">
+        *Phone is required
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.phone.errors?.pattern">
+        *Please follow 01X-XXXXXXX format
+      </span>
+
+      <ion-item>
+        <ion-label position="stacked">IC</ion-label>
+        <ion-input type="text" [(ngModel)]="ic" formControlName="ic"></ion-input>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.ic.errors?.required">
+        *IC is required
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.ic.errors?.pattern">
+        *Please follow NRIC XXXXXX-XX-XXXX format
+      </span>
+
+      <ion-item>
+        <ion-label position="stacked">Gender</ion-label>
+        <ion-select placeholder="Select Gender" formControlName="gender" [(ngModel)]="gender">
+          <ion-select-option value="Male">Male</ion-select-option>
+          <ion-select-option value="Female">Female</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.gender.errors?.required">
+        *Gender is required
+      </span>
+
+      <ion-item>
+        <ion-label position="stacked">Address</ion-label>
+        <ion-input type="text" [(ngModel)]="address" formControlName="address"></ion-input>
+      </ion-item>
+      <span class="error ion-padding" color="danger" *ngIf="isSubmitted && applyForm.controls.address.errors?.required">
+        *Address is required
+      </span>
+
+      <ion-item>
+        <ion-label position="stacked">Current Job / Position</ion-label>
+        <ion-input type="text" [(ngModel)]="job" formControlName="job"></ion-input>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.job.errors?.required">
+        *Current Job / Position is required
+      </span>
+
+      <ion-item>
+        <ion-label position="stacked">Company</ion-label>
+        <ion-input type="text" [(ngModel)]="company" formControlName="company"></ion-input>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.company.errors?.required ">
+        *Company is required
+      </span>
+
+      <ion-item>
+        <ion-label position="stacked">Salary</ion-label>
+        <ion-input type="number" [(ngModel)]="salary" formControlName="salary"></ion-input>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.salary.errors?.required">
+        *Salary is required
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.ic.errors?.pattern">
+        *Please enter numbers only
+      </span>
+
+      <div class="container-form-btn">
+        <ion-button expand='block' type="submit">Submit</ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>
