@@ -14,7 +14,7 @@ export class RegisterPage implements OnInit {
 
   public email: any;
   public password: any;
-  public cpassword: any;
+  public confirmPassword: any;
   public name: any;
   registerForm: FormGroup;
   isSubmitted = false;
@@ -51,9 +51,9 @@ export class RegisterPage implements OnInit {
   }
 
   async register() {
-    const { email, name, password, cpassword } = this;
+    const { email, name, password, confirmPassword } = this;
     try {
-      const res = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      const res = await this.afAuth.createUserWithEmailAndPassword(email, confirmPassword);
       this.afStore.doc(`users/${res.user.uid}`).set({
         email,
         name

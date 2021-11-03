@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="tertiary">
     <ion-title>
-      <h2>Loan</h2>
+      <h2>Loan Calculator</h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -38,14 +38,9 @@
     <ion-label position="stacked">Total payment:</ion-label>
     <ion-input disabled="true" type="text" [(ngModel)]='payment'></ion-input>
   </ion-item>
+  <ion-button expand='block' type="button" (click)="totalPayment()" >Calculate</ion-button>
 
-    <ion-button expand='block' type="button" (click)="totalPayment()" >Submit</ion-button>
-
-
-
-
-
-  <br>
+  <!-- <br>
   <ion-label position="stacked">Noted: You can pay off your load at any time
     with no penalty.
   </ion-label>
@@ -53,5 +48,20 @@
   <ion-label position="stacked">You will only pay interest up to the date you
     borrow it.
   </ion-label>
-  <br>
+  <br> -->
+
+  <ion-card class="card">
+    <ion-card-header>Noted:</ion-card-header>
+    <ion-card-content>
+     You can pay off your load at any time with no penalty.
+     You will only pay interest up to the date you borrow it.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="card">
+    <ion-card-header>Documents to be prepare:</ion-card-header>
+    <ion-card-content>
+      <ion-button expand='block' type="button" routerLink="/documentation">Document Lists</ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
