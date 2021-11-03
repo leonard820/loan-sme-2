@@ -1,6 +1,9 @@
-import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
-import { FireserviceService } from '../fireservice.service';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -9,39 +12,90 @@ import {Router} from '@angular/router';
 })
 export class RegisterPage implements OnInit {
 
-  public email:any;
-  public password:any;
-  public name:any;
+  public email: any;
+  public password: any;
+  public cpassword: any;
+  public name: any;
+  registerForm: FormGroup;
+  isSubmitted = false;
 
 
   constructor(
-    public router:Router,
-    public fireService:FireserviceService
+    public afAuth: AngularFireAuth,
+    public alert: AlertController,
+    public router: Router,
+    public afStore: AngularFirestore,
+    public formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+      confirmPassword: ['', [Validators.required]],
+      name: ['', [Validators.required]]
+    },
+      {
+        validator: this.matchPassword('password', 'confirmPassword'),
+      }
+    );
   }
 
-  register(){
-    this.fireService.signup({email:this.email,password:this.password}).then(res=>{
-      if(res.user.uid){
-        let data = {
-          email:this.email,
-          password:this.password,
-          name:this.name,
-          uid:res.user.uid
-        }
-        this.fireService.saveDetails(data).then(res=>{
-         alert('Account Created! You can now login with registered account.');
-         this.router.navigateByUrl('login');
-        },err=>{
-          console.log(err);
-        })
-      }
-    },err=>{
-      alert(err.message);
+  submit() {
+    this.isSubmitted = true;
+    if (this.registerForm.valid) {
+      this.register();
+    } else {
+      this.showAlert('Error!', 'Please fill in all the required fields!');
+    }
+  }
 
-      console.log(err);
-    })
+  async register() {
+    const { email, name, password, cpassword } = this;
+    try {
+      const res = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      this.afStore.doc(`users/${res.user.uid}`).set({
+        email,
+        name
+      });
+
+      console.log(res);
+      this.showAlert('Account Created!', 'Welcome to Loan!');
+      this.router.navigate(['/tabs']);
+    } catch (error) {
+      console.dir(error);
+      this.showAlert('Error', error.message);
+    }
+  }
+
+  async showAlert(header: string, message: string) {
+    const alert = await this.alert.create({
+      header,
+      message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  matchPassword(password: string, confirmPassword: string) {
+    return (formGroup: FormGroup) => {
+      const passwordControl = formGroup.controls[password];
+      const confirmPasswordControl = formGroup.controls[confirmPassword];
+
+      if (!passwordControl || !confirmPasswordControl) {
+        return null;
+      }
+
+      if (confirmPasswordControl.errors && !confirmPasswordControl.errors.passwordMismatch) {
+        return null;
+      }
+
+      if (passwordControl.value !== confirmPasswordControl.value) {
+        confirmPasswordControl.setErrors({ passwordMismatch: true });
+      } else {
+        confirmPasswordControl.setErrors(null);
+      }
+    };
   }
 }

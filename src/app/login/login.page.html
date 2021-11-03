@@ -5,23 +5,34 @@
 </ion-header>
 <ion-content class="ion-padding">
   <div class="form">
+    <form [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
 
-    <ion-item>
-      <ion-label position="stacked">Email</ion-label>
-      <ion-input [(ngModel)]='email'></ion-input>
-    </ion-item>
-    <br>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input type="text" [(ngModel)]="email" formControlName="email"></ion-input>
+      </ion-item>
+      <span class="error ion-padding invalid-feedback" *ngIf="isSubmitted && loginForm.controls.email.errors?.required">
+        *Email is required
+      </span>
+      <span class="error ion-padding invalid-feedback" *ngIf="isSubmitted && loginForm.controls.email.errors?.email">
+        *Please enter a valid email
+      </span>
 
-    <ion-item>
-      <ion-label position="stacked">Password</ion-label>
-      <ion-input [(ngModel)]='password'></ion-input>
-    </ion-item>
+      <br>
 
-    <ion-button (click)='login()' expand='block'>Login</ion-button>
-    <br>
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input type="password" [(ngModel)]="password" formControlName="password" ></ion-input>
+      </ion-item>
+      <span class="error ion-padding invalid-feedback" *ngIf="isSubmitted && loginForm.controls.password.errors?.required">
+        *Password is required
+      </span>
 
-    <h5 (click)='register()'>Don't have account? <ion-text color='primary'>Create here.</ion-text>
-    </h5>
-    
+      <ion-button type="submit" expand='block'>Login</ion-button>
+  
+      <br>
+      <ion-button routerLink="/register" expand='block'>Register</ion-button>
+    </form>
+
   </div>
 </ion-content>

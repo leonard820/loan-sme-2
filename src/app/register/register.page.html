@@ -9,21 +9,53 @@
 
 <ion-content class="ion-pading">
   <div class="form">
-    <ion-item>
-      <ion-label position="stacked">Name</ion-label>
-      <ion-input [(ngModel)]='name'></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Email</ion-label>
-      <ion-input [(ngModel)]='email'></ion-input>
-    </ion-item>
-    <br>
-    <ion-item>
-      <ion-label position="stacked">Password</ion-label>
-      <ion-input [(ngModel)]='password'></ion-input>
-    </ion-item>
-    <ion-button (click)='register()' expand='block'>Register</ion-button>
-    <p>Already have an account?</p>
-    <ion-button (click)='login()' expand='block' routerLink="/login">Login</ion-button>
+    <form [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
+      <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input type="text" [(ngModel)]="name" formControlName="name"></ion-input>
+      </ion-item>
+      <span class="error ion-padding invalid-feedback"
+        *ngIf="isSubmitted && registerForm.controls.name.errors?.required">
+        *Name is required
+      </span>
+
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input type="text" [(ngModel)]="email" formControlName="email"></ion-input>
+      </ion-item>
+      <span class="error ion-padding invalid-feedback"
+        *ngIf="isSubmitted && registerForm.controls.email.errors?.required">
+        *Email is required
+      </span>
+      <span class="error ion-padding invalid-feedback" *ngIf="isSubmitted && registerForm.controls.email.errors?.email">
+        *Please enter a valid email
+      </span>
+
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input type="password" [(ngModel)]="password" formControlName="password"></ion-input>
+      </ion-item>
+      <span class="error ion-padding invalid-feedback"
+        *ngIf="isSubmitted && registerForm.controls.password.errors?.required">
+        *Password is required
+      </span>
+
+      <ion-item>
+        <ion-label position="stacked">Confirm Password</ion-label>
+        <ion-input type="password" [(ngModel)]="confirmPassword" formControlName="confirmPassword"></ion-input>
+      </ion-item>
+      <span class="error ion-padding invalid-feedback"
+        *ngIf="isSubmitted && registerForm.controls.confirmPassword.errors?.required">
+        *Confirm Password is required
+      </span>
+      <span class="error ion-padding invalid-feedback"
+        *ngIf="isSubmitted && registerForm.controls.confirmPassword.errors?.passwordMismatch">
+        *Password not match
+      </span>
+
+      <ion-button type="submit" expand='block'>Register</ion-button>
+      <p>Already have an account?</p>
+      <ion-button expand='block' routerLink="/login">Login</ion-button>
+    </form>
   </div>
 </ion-content>

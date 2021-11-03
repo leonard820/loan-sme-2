@@ -22,14 +22,17 @@ const routes: Routes = [
     loadChildren: () => import('./documentation/documentation.module').then( m => m.DocumentationPageModule)
   },
   {
-    path: 'tab2',
-    loadChildren: () => import('./tab2/tab2.module').then( m => m.Tab2PageModule)
+    path: 'calculator',
+    loadChildren: () => import('./calculator/calculator.module').then( m => m.CalculatorPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },  {
+    path: 'apply',
+    loadChildren: () => import('./apply/apply.module').then( m => m.ApplyPageModule)
   }
 
-  // {
-  //   path: 'main',
-  //   loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-  // }
 ];
 @NgModule({
   imports: [
