@@ -17,6 +17,7 @@ export class ApplyPage implements OnInit {
 
   public email:any;
   public name:any;
+  public loan:any;
   public phone:any;
   public ic:any;
   public gender:any;
@@ -44,8 +45,7 @@ export class ApplyPage implements OnInit {
     this.afAuth.user.subscribe(response => {
       if (response !== null) {
         this.currentUser = response;
-        this.uID = this.currentUser.uid
-        this.email = this.currentUser.email
+        this.uID = this.currentUser.uid;
         this.userInfo = this.firestoreService.getUserInfo(this.uID).valueChanges();
       }
     }, error => {
@@ -55,6 +55,7 @@ export class ApplyPage implements OnInit {
     this.applyForm = this.formBuilder.group({
       email: [''],
       name: [''],
+      loan: ['',[Validators.required,Validators.min(1000),Validators.max(200000)]],
       phone: ['',[Validators.required,Validators.pattern('[0-9]{3}-[0-9]{7,8}')]],
       ic: ['',[Validators.required,Validators.pattern('[0-9]{6}-[0-9]{2}-[0-9]{4}')]],
       gender: ['',[Validators.required]],
@@ -76,13 +77,14 @@ export class ApplyPage implements OnInit {
   }
 
   apply() {
-    const { email, name, phone, ic, gender, address, job, company, salary } = this;
+    const { email, name, loan, phone, ic, gender, address, job, company, salary } = this;
 
     // Create new order in Order collection
     this.afStore.doc(`applications/${this.uID}`).set({
       UserID: this.uID,
       Email: email,
       Name: name,
+      LoanAmount: loan,
       Phone: phone,
       IC: ic,
       Gender: gender,

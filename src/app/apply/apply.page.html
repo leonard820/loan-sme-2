@@ -11,14 +11,27 @@
     <form [formGroup]="applyForm" (ngSubmit)="submit()" novalidate>
       <ion-item>
         <ion-label position="stacked">Email</ion-label>
-        <ion-input type="email" [(ngModel)]="email" value="{{ (userInfo | async)?.email }}" formControlName="email" disabled="true"></ion-input>
+        <ion-input [disabled]="true" type="email" [(ngModel)]="email" formControlName="email">{{ (userInfo | async)?.email }}</ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked">Name</ion-label>
-        <ion-input type="text" [(ngModel)]="name" value="{{ (userInfo | async)?.name }}" formControlName="name"
-          disabled="true"></ion-input>
+        <ion-input [disabled]="true" type="text" [(ngModel)]="name" formControlName="name">{{ (userInfo | async)?.name }}</ion-input>
       </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Loan Amount</ion-label>
+        <ion-input type="number" [(ngModel)]="loan" formControlName="loan"></ion-input>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.loan.errors?.required">
+        *Amount for loan is required
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.loan.errors?.min">
+        *Loan amount is between RM1k to RM200K only
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.loan.errors?.max">
+        *Loan amount is between RM1k to RM200K only
+      </span>
 
       <ion-item>
         <ion-label position="stacked">Phone</ion-label>
@@ -83,9 +96,6 @@
       </ion-item>
       <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.salary.errors?.required">
         *Salary is required
-      </span>
-      <span class="error ion-padding" *ngIf="isSubmitted && applyForm.controls.ic.errors?.pattern">
-        *Please enter numbers only
       </span>
 
       <div class="container-form-btn">
