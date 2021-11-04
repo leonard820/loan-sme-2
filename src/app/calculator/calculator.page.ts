@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-calculator',
@@ -7,27 +9,56 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalculatorPage implements OnInit {
 
-  public amount:any;
-  public terms:any;
-  public interest:any;
-  public totalInterest:any;
-  public payment:any;
-  public activeLoanAcc:any;
+  public amount:number;
+  public terms = 0;
+  public activeLoanAcc = 250;
+  public interest = 0.0035;
+  public totalInterest = 0;
+  public monthlyPayment = 0;
+  public totalPayment = 0;
 
-  constructor() { 
-    this.amount = 10000
-    this.interest = 0.0035;
-    this.totalInterest = 0;
-    this.terms = 0;
-    this.payment = 0;
-    this.activeLoanAcc = 250;
-  }
+  calculateForm: FormGroup;
+  isSubmitted = false;
+  
+  constructor(
+    public formBuilder: FormBuilder,
+    public alert: AlertController
+  ) { }
 
   ngOnInit() {
+    this.calculateForm = this.formBuilder.group({
+      amount: [0,[Validators.required,Validators.min(1000),Validators.max(200000)]],
+      terms: [],
+      activeLoanAcc: [],
+      interest: [],
+      totalInterest: [],
+      monthlyPayment: [],
+      totalPayment: [],
+    })
   }
 
-  totalPayment(){
-    this.totalInterest = this.amount * this.terms * this.interest
-    this.payment = this.amount + this.totalInterest
+  submit(){
+    this.isSubmitted = true;
+    if(this.calculateForm.valid){
+      this.calculate();
+    }else{
+      this.showAlert('Error!', 'Please fill in all the required fields!');
+    }
+  }
+
+  calculate(){
+    this.totalInterest = (this.amount + this.activeLoanAcc) * this.interest * this.terms;
+    this.totalPayment = this.amount + this.activeLoanAcc + this.totalInterest;
+    this.monthlyPayment = this.totalPayment / this.terms;
+  }
+
+  async showAlert (header: string, message: string) {
+    const alert = await this.alert.create({
+      header,
+      message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }
