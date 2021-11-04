@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -12,6 +13,7 @@ import { User } from '../models/user.interface';
   selector: 'app-apply',
   templateUrl: './apply.page.html',
   styleUrls: ['./apply.page.scss'],
+  providers: [DatePipe]
 })
 export class ApplyPage implements OnInit {
 
@@ -28,6 +30,7 @@ export class ApplyPage implements OnInit {
   public userInfo: Observable<User>;
   uID: string;
   currentUser: any;
+  currentDateTime: any;
   
   applyForm: FormGroup;
   isSubmitted = false;
@@ -38,7 +41,8 @@ export class ApplyPage implements OnInit {
     public router:Router,
     public afStore: AngularFirestore,
     public formBuilder: FormBuilder,
-    private firestoreService: FirestoreService
+    private firestoreService: FirestoreService,
+    public datePipe: DatePipe
   ) { }
 
   ngOnInit() {
@@ -79,10 +83,11 @@ export class ApplyPage implements OnInit {
 
   apply() {
     const { email, name, loan, phone, ic, gender, address, job, company, salary } = this;
-
+    this.currentDateTime = this.datePipe.transform(new Date(), 'yyyyMMddHHmmss');
     // Create new order in Order collection
-    this.afStore.doc(`applications/${this.uID}`).set({
+    this.afStore.doc(`applications/${this.currentDateTime}`).set({
       UserID: this.uID,
+      LoanID: this.currentDateTime,
       Email: email,
       Name: name,
       LoanAmount: loan,

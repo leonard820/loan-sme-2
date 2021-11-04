@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title>
+      <h2>My Profile</h2>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+
+    <ion-card class="card">
+
+      <ion-card-content>
+       Email: {{ (userInfo | async)?.email }}
+      </ion-card-content>
+
+      <ion-card-content>
+        Name: {{ (userInfo | async)?.name }}
+       </ion-card-content>
+    </ion-card>
+
+    <div class="container-form-btn">
+      <ion-button expand='block' (click)="signOut()">Sign Out</ion-button>
+    </div>  
+     
+  </div>
+
+</ion-content>

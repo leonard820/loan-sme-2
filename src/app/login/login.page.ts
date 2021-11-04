@@ -18,18 +18,18 @@ export class LoginPage implements OnInit {
   loginForm: FormGroup;
   isSubmitted = false;
 
-  constructor( 
-    public router:Router,
+  constructor(
+    public router: Router,
     public afAuth: AngularFireAuth,
     public alert: AlertController,
     private afs: AngularFirestore,
     public formBuilder: FormBuilder
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: ['',[Validators.required,Validators.email]],
-      password: ['',[Validators.required]]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
     })
   }
 
@@ -43,22 +43,28 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
-    const {email, password} = this;
+    const { email, password } = this;
     try {
-      console.log(email,password);
-        const res = await this.afAuth.signInWithEmailAndPassword(email, password);
-        this.router.navigate(['/tabs']);
-        this.showAlert('Hi!', 'Welcome back to Loan');
-        console.log(res);
+      const res = await this.afAuth.signInWithEmailAndPassword(email, password);
+      console.log(res);
+      this.afs.firestore.doc('/admin/' + res.user.uid).get()
+        .then(docSnapshot => {
+          if (docSnapshot.exists) {
+            this.router.navigate(['/tabs2/admin-home']);
+          } else {
+            this.router.navigate(['/tabs/home']);
+          }
+        });
+      this.showAlert('Hi!', 'Welcome back to Loan');
     } catch (err) {
-        console.dir(err);
-        if (err.code === 'auth/user-not-found') {
-          this.showAlert('Error', err.message);
-        }
+      console.dir(err);
+      if (err.code === 'auth/user-not-found') {
+        this.showAlert('Error', err.message);
+      }
     }
   }
 
-  async showAlert (header: string, message: string) {
+  async showAlert(header: string, message: string) {
     const alert = await this.alert.create({
       header,
       message,
