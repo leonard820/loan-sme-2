@@ -46,6 +46,7 @@ export class ApplyPage implements OnInit {
       if (response !== null) {
         this.currentUser = response;
         this.uID = this.currentUser.uid;
+        //this.email = this.currentUser.email;
         this.userInfo = this.firestoreService.getUserInfo(this.uID).valueChanges();
       }
     }, error => {

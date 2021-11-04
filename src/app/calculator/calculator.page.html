@@ -7,54 +7,68 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-label position="stacked" >Loan Amount:</ion-label>
-    <ion-input type="number" [(ngModel)]='amount'></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Term</ion-label>
-    <ion-select placeholder="Select Terms" [(ngModel)]="terms">
-      <ion-select-option value=12>1 Year</ion-select-option>
-      <ion-select-option value=24>2 Years</ion-select-option>
-      <ion-select-option value=36>3 Years</ion-select-option>
-      <ion-select-option value=45>4 Years</ion-select-option>
-      <ion-select-option value=54>5 Years</ion-select-option>
-      <ion-select-option value=63>6 Years</ion-select-option>
-      <ion-select-option value=72>7 Years</ion-select-option>
-      <ion-select-option value=81>8 Years</ion-select-option>
-      <ion-select-option value=90>9 Years</ion-select-option>
-      <ion-select-option value=120>10 Years</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">Interest Rate:</ion-label>
-    <ion-input disabled="true" type="text" [(ngModel)]='interest'></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">Total Interest:</ion-label>
-    <ion-input disabled="true" type="text" [(ngModel)]='totalInterest'></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">Total payment:</ion-label>
-    <ion-input disabled="true" type="text" [(ngModel)]='payment'></ion-input>
-  </ion-item>
-  <ion-button expand='block' type="button" (click)="totalPayment()" >Calculate</ion-button>
-
-  <!-- <br>
-  <ion-label position="stacked">Noted: You can pay off your load at any time
-    with no penalty.
-  </ion-label>
+  <div class="form">
+    <form [formGroup]="calculateForm" (ngSubmit)="submit()" novalidate>
+      <ion-item>
+        <ion-label position="stacked">Loan Amount:</ion-label>
+        <ion-input type="number" [(ngModel)]='amount' formControlName="amount"></ion-input>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="isSubmitted && calculateForm.controls.amount.errors?.required">
+        *Amount for loan is required
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && calculateForm.controls.amount.errors?.min">
+        *Loan amount is between RM1k to RM200K only
+      </span>
+      <span class="error ion-padding" *ngIf="isSubmitted && calculateForm.controls.amount.errors?.max">
+        *Loan amount is between RM1k to RM200K only
+      </span>
+      <ion-item>
+        <ion-label>Term</ion-label>
+        <ion-select placeholder="Select Terms" [(ngModel)]="terms" formControlName="terms">
+          <ion-select-option value=12>1 Year</ion-select-option>
+          <ion-select-option value=24>2 Years</ion-select-option>
+          <ion-select-option value=36>3 Years</ion-select-option>
+          <ion-select-option value=45>4 Years</ion-select-option>
+          <ion-select-option value=54>5 Years</ion-select-option>
+          <ion-select-option value=63>6 Years</ion-select-option>
+          <ion-select-option value=72>7 Years</ion-select-option>
+          <ion-select-option value=81>8 Years</ion-select-option>
+          <ion-select-option value=90>9 Years</ion-select-option>
+          <ion-select-option value=120>10 Years</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Active Loan Account Fees:</ion-label>
+        <ion-input [disabled]="true" type="number" formControlName="activeLoanAcc">{{activeLoanAcc}}</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Interest Rate:</ion-label>
+        <ion-input [disabled]="true" type="number" formControlName="interest">{{interest}}</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Total Interest:</ion-label>
+        <ion-input [disabled]="true" type="number" formControlName="totalInterest">{{totalInterest}}</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Monthly Payment:</ion-label>
+        <ion-input [disabled]="true" type="number" formControlName="monthlyPayment">{{monthlyPayment}}</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Total Payment:</ion-label>
+        <ion-input [disabled]="true" type="number" formControlName="totalPayment">{{totalPayment}}</ion-input>
+      </ion-item>
+      <div class="container-form-btn">
+        <ion-button expand='block' type="submit">Calculate</ion-button>
+      </div>
+    </form>
+  </div>
   <br>
-  <ion-label position="stacked">You will only pay interest up to the date you
-    borrow it.
-  </ion-label>
-  <br> -->
 
   <ion-card class="card">
     <ion-card-header>Noted:</ion-card-header>
     <ion-card-content>
-     You can pay off your load at any time with no penalty.
-     You will only pay interest up to the date you borrow it.
+      You can pay off your load at any time with no penalty.
+      You will only pay interest up to the date you borrow it.
     </ion-card-content>
   </ion-card>
 
@@ -64,4 +78,5 @@
       <ion-button expand='block' type="button" routerLink="/documentation">Document Lists</ion-button>
     </ion-card-content>
   </ion-card>
+
 </ion-content>
