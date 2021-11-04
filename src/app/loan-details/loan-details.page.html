@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Loan #{{ (loanDetails | async)?.LoanID }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
+        Email: {{ (loanDetails | async)?.Email }}
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
+        Name: {{ (loanDetails | async)?.Name }}
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
+        Loan Apply: {{ (loanDetails | async)?.LoanAmount }}
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
+        Phone: {{ (loanDetails | async)?.Phone }}
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
+        IC: {{ (loanDetails | async)?.IC }}
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
+        Gender: {{ (loanDetails | async)?.Gender }}
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
+        Address: {{ (loanDetails | async)?.Address }}
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
+        Current Job/Position: {{ (loanDetails | async)?.Job }}
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
+        Company: {{ (loanDetails | async)?.Company }}
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
+        Salary: {{ (loanDetails | async)?.Salary }}
+      </ion-label>
+    </ion-item>
+  </ion-card>
+</ion-content>

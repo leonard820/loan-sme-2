@@ -25,37 +25,37 @@
       <ion-item>
         <ion-label>Term</ion-label>
         <ion-select placeholder="Select Terms" [(ngModel)]="terms" formControlName="terms">
-          <ion-select-option value=12>1 Year</ion-select-option>
-          <ion-select-option value=24>2 Years</ion-select-option>
-          <ion-select-option value=36>3 Years</ion-select-option>
-          <ion-select-option value=45>4 Years</ion-select-option>
-          <ion-select-option value=54>5 Years</ion-select-option>
-          <ion-select-option value=63>6 Years</ion-select-option>
-          <ion-select-option value=72>7 Years</ion-select-option>
-          <ion-select-option value=81>8 Years</ion-select-option>
-          <ion-select-option value=90>9 Years</ion-select-option>
-          <ion-select-option value=120>10 Years</ion-select-option>
+          <ion-select-option value=1>1 Year</ion-select-option>
+          <ion-select-option value=2>2 Years</ion-select-option>
+          <ion-select-option value=3>3 Years</ion-select-option>
+          <ion-select-option value=4>4 Years</ion-select-option>
+          <ion-select-option value=5>5 Years</ion-select-option>
+          <ion-select-option value=6>6 Years</ion-select-option>
+          <ion-select-option value=7>7 Years</ion-select-option>
+          <ion-select-option value=8>8 Years</ion-select-option>
+          <ion-select-option value=9>9 Years</ion-select-option>
+          <ion-select-option value=10>10 Years</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Active Loan Account Fees:</ion-label>
-        <ion-input [disabled]="true" type="number" formControlName="activeLoanAcc">{{activeLoanAcc}}</ion-input>
-      </ion-item>
-      <ion-item>
         <ion-label position="stacked">Interest Rate:</ion-label>
-        <ion-input [disabled]="true" type="number" formControlName="interest">{{interest}}</ion-input>
+        <ion-input [disabled]="true" type="number" formControlName="interest">{{interest*100}}%</ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Total Interest:</ion-label>
         <ion-input [disabled]="true" type="number" formControlName="totalInterest">{{totalInterest}}</ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">Monthly Payment:</ion-label>
-        <ion-input [disabled]="true" type="number" formControlName="monthlyPayment">{{monthlyPayment}}</ion-input>
+        <ion-label position="stacked">Active Loan Account Fees:</ion-label>
+        <ion-input [disabled]="true" type="number" formControlName="activeLoanAcc">{{activeLoanAcc}}</ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Total Payment:</ion-label>
         <ion-input [disabled]="true" type="number" formControlName="totalPayment">{{totalPayment}}</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Monthly Payment:</ion-label>
+        <ion-input [disabled]="true" type="number" formControlName="monthlyPayment">{{monthlyPayment}}</ion-input>
       </ion-item>
       <div class="container-form-btn">
         <ion-button expand='block' type="submit">Calculate</ion-button>

@@ -12,7 +12,7 @@ export class CalculatorPage implements OnInit {
   public amount:number;
   public terms = 0;
   public activeLoanAcc = 250;
-  public interest = 0.0035;
+  public interest = 0.08;
   public totalInterest = 0;
   public monthlyPayment = 0;
   public totalPayment = 0;
@@ -47,9 +47,9 @@ export class CalculatorPage implements OnInit {
   }
 
   calculate(){
-    this.totalInterest = (this.amount + this.activeLoanAcc) * this.interest * this.terms;
+    this.totalInterest = this.amount * this.interest * this.terms;
     this.totalPayment = this.amount + this.activeLoanAcc + this.totalInterest;
-    this.monthlyPayment = this.totalPayment / this.terms;
+    this.monthlyPayment = this.totalPayment / (this.terms * 12);
   }
 
   async showAlert (header: string, message: string) {

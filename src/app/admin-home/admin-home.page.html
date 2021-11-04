@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title>
+      <h2>Admin Home</h2>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- <h1 style="text-align:Center;" class="custom-font">Loan Applcaiton List</h1> -->
+  <ion-card *ngFor="let loan of loanList | async">
+    <ion-card-header>
+      <ion-card-title position="stacked">Loan #{{ loan.LoanID }}</ion-card-title>
+    </ion-card-header>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
+        Name: {{ loan.Name }}
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
+        Phone: {{ loan.Phone }}
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
+        Loan Apply: {{ loan.LoanAmount }}
+      </ion-label>
+    </ion-item>
+    <ion-card-content class="container-form-btn">
+      <ion-button expand='block' type="button" routerLink="/loan-details/{{loan.LoanID}}">View Details</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

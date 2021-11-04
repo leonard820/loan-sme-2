@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat/firestore";
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/compat/firestore";
+import { Loan } from "./models/loan.interface";
 import { User } from "./models/user.interface";
 
 @Injectable({
@@ -28,6 +29,18 @@ export class FirestoreService {
 
   getUserInfo(userId: string): AngularFirestoreDocument<User> {
     return this.firestore.collection('users').doc(userId);
+  }
+
+  getAdminInfo(userId: string): AngularFirestoreDocument<User> {
+    return this.firestore.collection('admin').doc(userId);
+  }
+
+  getLoanList(): AngularFirestoreCollection<Loan> {
+    return this.firestore.collection('applications');
+  }
+
+  getLoanDetails(loanId: string): AngularFirestoreDocument<Loan> {
+    return this.firestore.collection(`applications`).doc(loanId);
   }
 
   userDetails() {

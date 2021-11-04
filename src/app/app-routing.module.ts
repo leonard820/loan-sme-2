@@ -6,6 +6,9 @@ const routes: Routes = [
     path: '', loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
+    path: '', loadChildren: () => import('./tabs2/tabs2.module').then( m => m.Tabs2PageModule)
+  },
+  {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
@@ -28,9 +31,26 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
-  },  {
+  },
+  {
     path: 'apply',
     loadChildren: () => import('./apply/apply.module').then( m => m.ApplyPageModule)
+  },
+  {
+    path: 'admin-home',
+    loadChildren: () => import('./admin-home/admin-home.module').then( m => m.AdminHomePageModule)
+  },
+  {
+    path: 'admin-profile',
+    loadChildren: () => import('./admin-profile/admin-profile.module').then( m => m.AdminProfilePageModule)
+  },
+  {
+    path: 'admin-loan',
+    loadChildren: () => import('./admin-loan/admin-loan.module').then( m => m.AdminLoanPageModule)
+  },
+  {
+    path: 'loan-details/:LoanID',
+    loadChildren: () => import('./loan-details/loan-details.module').then( m => m.LoanDetailsPageModule)
   }
 
 ];
