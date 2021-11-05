@@ -11,4 +11,5 @@ export interface Loan {
     Address: string;
     Email: string;
     Phone: string;
+    Status: string;
 }
