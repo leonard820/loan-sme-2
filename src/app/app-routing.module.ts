@@ -51,7 +51,11 @@ const routes: Routes = [
   {
     path: 'loan-details/:LoanID',
     loadChildren: () => import('./loan-details/loan-details.module').then( m => m.LoanDetailsPageModule)
+  },  {
+    path: 'loan',
+    loadChildren: () => import('./loan/loan.module').then( m => m.LoanPageModule)
   }
+
 
 ];
 @NgModule({

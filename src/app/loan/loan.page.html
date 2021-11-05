@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-title>
+      <h2>Loan Application</h2>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <ion-card class="card" *ngFor="let loan of loanDetails | async">
+      <ion-card-header class="ion-text-center">
+        <ion-card-title>My Loan Application</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Loan ID: #{{ loan.LoanID }}
+      </ion-card-content>
+      <ion-card-content>
+        Name: {{ loan.Name }}
+      </ion-card-content>
+      <ion-card-content>
+        Amount: RM {{ loan.LoanAmount }}
+      </ion-card-content>
+      <ion-card-content>
+        Status: {{ loan.Status }}
+      </ion-card-content>
+    </ion-card>
+    <br />
+    <ion-card class="card">
+      <ion-card-header class="ion-text-center">
+        <ion-card-title>Apply New Loan</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button expand='block' routerLink="/apply">Apply</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

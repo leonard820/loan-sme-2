@@ -52,10 +52,16 @@ export class ApplyPage implements OnInit {
         this.uID = this.currentUser.uid;
         //this.email = this.currentUser.email;
         this.userInfo = this.firestoreService.getUserInfo(this.uID).valueChanges();
+        this.userInfo.subscribe(data => {
+          this.email = data.email,
+          this.name = data.name
+        });
       }
     }, error => {
       console.log(error);
-    })
+    });
+
+   
    
     this.applyForm = this.formBuilder.group({
       email: [''],
@@ -88,8 +94,8 @@ export class ApplyPage implements OnInit {
     this.afStore.doc(`applications/${this.currentDateTime}`).set({
       UserID: this.uID,
       LoanID: this.currentDateTime,
-      Email: email,
-      Name: name,
+      Email: this.email,
+      Name: this.name,
       LoanAmount: loan,
       Phone: phone,
       IC: ic,
@@ -97,9 +103,26 @@ export class ApplyPage implements OnInit {
       Address: address,
       Job: job,
       Company: company,
-      Salary: salary
+      Salary: salary,
+      Status:'Processing'
+    });
+    this.afStore.doc(`users/${this.uID}/loan/${this.currentDateTime}`).set({
+      UserID: this.uID,
+      LoanID: this.currentDateTime,
+      Email:this.email,
+      Name: this.name,
+      LoanAmount: loan,
+      Phone: phone,
+      IC: ic,
+      Gender: gender,
+      Address: address,
+      Job: job,
+      Company: company,
+      Salary: salary,
+      Status:'Processing'
     });
     this.showAlert('Success!', 'Your Loan Application Has Been Submitted!');
+    this.router.navigate(['/tabs/loan']);
   }
 
   async showAlert (header: string, message: string) {

@@ -11,6 +11,11 @@
   <ion-card>
     <ion-item lines="none">
       <ion-label class="ion-text-wrap">
+        Status: {{ (loanDetails | async)?.Status }}
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="ion-text-wrap">
         Email: {{ (loanDetails | async)?.Email }}
       </ion-label>
     </ion-item>
@@ -59,5 +64,17 @@
         Salary: {{ (loanDetails | async)?.Salary }}
       </ion-label>
     </ion-item>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <ion-button color="danger" expand="block" (click)="reject()" class="ion-text-wrap">Reject</ion-button>
+          </ion-col>
+          <ion-col class="ion-text-center">
+            <ion-button color="success" expand="block" (click)="approve()" class="ion-text-wrap">Approve</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
   </ion-card>
 </ion-content>

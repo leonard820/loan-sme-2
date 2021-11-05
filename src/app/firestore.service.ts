@@ -43,6 +43,10 @@ export class FirestoreService {
     return this.firestore.collection(`applications`).doc(loanId);
   }
 
+  getUserLoanDetails(userId: string): AngularFirestoreCollection<Loan> {
+    return this.firestore.collection(`users`).doc(userId).collection(`loan`);
+  }
+
   userDetails() {
     return this.auth.user
   }

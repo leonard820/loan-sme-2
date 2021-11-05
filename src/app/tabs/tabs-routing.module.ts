@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('../apply/apply.module').then(m => m.ApplyPageModule)
       },
       {
+        path: 'loan',
+        loadChildren: () => import('../loan/loan.module').then( m => m.LoanPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
